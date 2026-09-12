@@ -225,7 +225,7 @@ graph TD
     style Decision fill:#f9f9f9,stroke:#333,stroke-width:1px
 ```
 
-#### 2. Déploiement en conditions réelles (Production)
+#### 2. Déploiement lors de Production
 ```mermaid
 graph TD
     Sensors[Capteurs IoT] -->|Collecte des donnees| Gateway[Raspberry Pi / Passerelle Edge]
