@@ -114,14 +114,15 @@ python train_model.py
 
 Cela crée :
 
-```mermaid
-graph LR
-    artifacts[(artifacts/)] --- autoencoder_state[📄 autoencoder_state.pt]
-    artifacts --- autoencoder_torchscript[📄 autoencoder_torchscript.pt]
-    artifacts --- edge_config[📄 edge_config.json]
-    artifacts --- validation_metrics[📄 validation_metrics.json]
-    artifacts --- training_history[📄 training_history.csv]
-```
+
+| Type de fichier | Nom du fichier | Description / Rôle |
+| :--- | :--- | :--- |
+| **Modèle** | `autoencoder_state.pt` | Poids du modèle PyTorch entraîné |
+| **Modèle** | `autoencoder_torchscript.pt` | Modèle exporté en TorchScript pour le déploiement |
+| **Configuration** | `edge_config.json` | Paramètres et seuils pour les capteurs IoT |
+| **Métrique** | `validation_metrics.json` | Résultats obtenus sur l'ensemble de validation |
+| **Historique** | `training_history.csv` | Évolution de la perte (loss) durant l'entraînement |
+
 
 Si ONNX est installé, vous aurez aussi :
 
@@ -129,7 +130,7 @@ Si ONNX est installé, vous aurez aussi :
 autoencoder.onnx
 ```
 
-C'est ce fichier qui sera pratique pour une future PWA JavaScript avec ONNX Runtime Web.
+C'est ce fichier qui sera pratique pour Notre future PWA avec ONNX Runtime Web.
 
 ---
 
@@ -151,14 +152,14 @@ Le script donne :
 
 et produit :
 
-```text
-artifacts/
-├── test_metrics.json
-├── test_predictions.csv
-├── confusion_matrix.png
-├── roc_curve.png
-└── precision_recall_curve.png
-```
+
+| Type de fichier | Nom du fichier | Description / Rôle |
+| :--- | :--- | :--- |
+| Metrique Test | `test_metrics.json` | Metriques finales (Accuracy, F1, Precision, Recall) |
+| Predictions | `test_predictions.csv` | Resultats des predictions detaillees sur les donnees de test |
+| Graphique | `confusion_matrix.png` | Matrice de confusion (Vrais/Faux Positifs/Negatifs) |
+| Graphique | `roc_curve.png` | Courbe ROC pour evaluer la performance globale du modele |
+| Graphique | `precision_recall_curve.png` | Courbe Precision-Rappel pour les donnees desequilibrees |
 
 ---
 
@@ -211,40 +212,27 @@ mais ils mesurent la qualité de reconstruction et ne remplacent pas Precision/R
 
 ---
 
-# Formulation importante dans le rapport
+### Architecture du flux de données avec le modele Edge
 
-> Le jeu de données fourni ne contient pas d'étiquette explicite d'anomalie. Les observations originales sont donc utilisées pour modéliser le comportement de référence. Des anomalies contrôlées sont introduites exclusivement dans les ensembles de validation et de test afin de mesurer objectivement la capacité du modèle à détecter des valeurs aberrantes. Les données d'entraînement originales ne sont pas modifiées.
+#### 1. Mode Démonstration
+```mermaid
+graph TD
+    User[Utilisateur] -->|Saisie des valeurs| App[Application Locale]
+    App -->|Input| Model[Modele Edge]
+    Model -->|Calcul| Score[Score d'anomalie]
+    Score -->|Classification| Decision{NORMAL / ANOMALIE}
 
----
-
-# Edge AI
-
-Le modèle est volontairement très léger.
-
-Pour la démonstration :
-
-```text
-Utilisateur saisit les valeurs
-        ->
-application locale
-        ->
-modèle Edge
-        ->
-score d'anomalie
-        ->
-NORMAL / ANOMALIE
+    style Decision fill:#f9f9f9,stroke:#333,stroke-width:1px
 ```
 
-Dans un vrai système :
+#### 2. Déploiement en conditions réelles (Production)
+```mermaid
+graph TD
+    Sensors[Capteurs IoT] -->|Collecte des donnees| Gateway[Raspberry Pi / Passerelle Edge]
+    Gateway -->|Execution locale| ModelProd[Meme Modele Edge]
+    ModelProd -->|Classification| DecisionProd{NORMAL / ANOMALIE}
 
-```text
-capteurs
-        ->
-Raspberry Pi / passerelle Edge
-        ->
-même modèle
-        ->
-NORMAL / ANOMALIE
+    style DecisionProd fill:#f9f9f9,stroke:#333,stroke-width:1px
 ```
 
 La source des nombres change, mais le modèle reste le même.
