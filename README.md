@@ -114,13 +114,13 @@ python train_model.py
 
 Cela crée :
 
-```text
-artifacts/
-├── autoencoder_state.pt
-├── autoencoder_torchscript.pt
-├── edge_config.json
-├── validation_metrics.json
-└── training_history.csv
+```mermaid
+graph LR
+    artifacts[(artifacts/)] --- autoencoder_state[📄 autoencoder_state.pt]
+    artifacts --- autoencoder_torchscript[📄 autoencoder_torchscript.pt]
+    artifacts --- edge_config[📄 edge_config.json]
+    artifacts --- validation_metrics[📄 validation_metrics.json]
+    artifacts --- training_history[📄 training_history.csv]
 ```
 
 Si ONNX est installé, vous aurez aussi :
