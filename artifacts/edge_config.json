@@ -1,0 +1,24 @@
+{
+  "features": [
+    "Temperature",
+    "Humidity",
+    "Light",
+    "CO2"
+  ],
+  "scaler_center": [
+    20.39,
+    26.2225,
+    0.0,
+    453.5
+  ],
+  "scaler_scale": [
+    1.6900000000000013,
+    10.3333333333333,
+    256.375,
+    199.83333333333348
+  ],
+  "threshold": 0.015397730309654743,
+  "model_architecture": "4-16-3-16-4 Autoencoder",
+  "anomaly_rule": "reconstruction_mse > threshold",
+  "important_note": "Occupancy is not an anomaly label. Controlled anomalies are injected only for validation/test."
+}

@@ -1,0 +1,22 @@
+{
+  "accuracy": 0.8087059064807219,
+  "precision": 0.7442596348884382,
+  "recall": 0.9406275635767022,
+  "f1_score": 0.8310005888481224,
+  "roc_auc": 0.9304593542495396,
+  "pr_auc": 0.9429961157691332,
+  "confusion_matrix": [
+    [
+      6600,
+      3152
+    ],
+    [
+      579,
+      9173
+    ]
+  ],
+  "threshold": 0.015397730309654743,
+  "reconstruction_mae_normal": 0.11449123173952103,
+  "reconstruction_rmse_normal": 0.1672718261021832,
+  "reconstruction_r2_normal": 0.8717527985572815
+}
